@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Model\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,6 +23,13 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
         $this->registry = $registry;
+    }
+
+    public function findAllWithPagination(int $page): Paginator
+    {
+        $query = $this->createQueryBuilder('p')->orderBy('p.id', 'DESC');
+
+        return new Paginator($query, $page);
     }
 
     public function save(Product $product): void

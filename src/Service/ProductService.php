@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Product;
+use App\Model\Paginator;
 use App\Repository\ProductRepository;
 
 class ProductService implements ProductServiceInterface
@@ -17,6 +18,11 @@ class ProductService implements ProductServiceInterface
     public function getProducts(): ?array
     {
         return $this->repository->findAll();
+    }
+
+    public function getProductsWithPagination(int $page): Paginator
+    {
+        return $this->repository->findAllWithPagination($page);
     }
 
     public function getProductById(int $id): ?Product
