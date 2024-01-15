@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_', format: 'json')]
@@ -48,6 +49,7 @@ class ProductController extends AbstractController
         return $this->json($product);
     }
 
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route('/products', name: 'create_product', methods: ['POST'])]
     public function createProduct(Request $request, ProductOptionsResolver $productOptionsResolver): JsonResponse
     {
@@ -77,7 +79,7 @@ class ProductController extends AbstractController
             throw new BadRequestHttpException($e->getMessage());
         }
     }
-
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route('/products/{id}', name: 'update_product', methods: ['PUT', 'PATCH'])]
     public function updateProduct(Product $product, Request $request, ProductOptionsResolver $productOptionsResolver): JsonResponse
     {
@@ -118,6 +120,7 @@ class ProductController extends AbstractController
         }
     }
 
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route('/products/{id}', name: 'remove_product', methods: ['DELETE'])]
     public function removeProduct(Product $product): JsonResponse
     {

@@ -9,7 +9,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 
 class Paginator extends DoctrinePaginator
 {
-    public const ITEMS_PER_PAGE = 2;
+    public const ITEMS_PER_PAGE = 5;
 
     private int $total;
     private array $data;
