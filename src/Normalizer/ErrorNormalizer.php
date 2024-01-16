@@ -5,13 +5,10 @@ namespace App\Normalizer;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * @method array getSupportedTypes(?string $format)
- */
 class ErrorNormalizer implements NormalizerInterface
 {
 
-    public function normalize($exception, string $format = null, array $context = []): array
+    public function normalize(mixed $exception, string $format = null, array $context = []): array
     {
         return [
             'message' => $context['debug'] ? $exception->getMessage() : 'An error occurred',
@@ -20,8 +17,13 @@ class ErrorNormalizer implements NormalizerInterface
         ];
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
         return $data instanceof FlattenException;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return ['json'];
     }
 }
